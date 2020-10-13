@@ -1,0 +1,25 @@
+<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+<body>
+    <div id="root">
+    </div>
+</body>
+<script type="text/babel">
+    const rootElement = document.getElementById('root')
+    const children1 = 'Hello'
+    const children2 = 'BTS'
+    const className = 'container'
+    const props1 = {children: children1, className}
+    const props2 = {children: children2, className}
+    
+    // const element = <React.Fragment>
+    //     <h1 {...props1}/>
+    //     <h1 {...props2} className="not-container"/>
+    // </React.Fragment>
+    const element = (
+        <>
+            <span {...props1}/> <span {...props2} className="not-container"/>
+        </>)
+    ReactDOM.render(element, rootElement)
+</script>

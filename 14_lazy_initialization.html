@@ -1,0 +1,45 @@
+<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script type="text/babel">
+
+
+
+const App = () => {
+    const [name1, setName1] = React.useState(() => {
+        console.log('getItem')
+        return window.localStorage.getItem('name1') || ''
+    })
+    React.useEffect(() => {
+        window.localStorage.setItem('name1', name1)
+    })
+
+    const [name2, setName2] = React.useState(() => {
+        window.localStorage.getItem('name2') || ''
+    })
+    React.useEffect(() => {
+        window.localStorage.setItem('name2', name2)
+    })
+
+    const setUserNameHandler = (event) => {
+        setName1(event.target.value)
+
+    }
+
+    return (
+        <div>
+            <p><input id="text1" onChange={setUserNameHandler} value={name1}/> </p>
+            <p>You typed: {name1}</p>
+            <p><input id="text2" onChange={event => setName2(event.target.value)} value={name2}/> </p>
+            <p>You typed: {name2}</p>
+        </div>
+    )
+}
+const renderApp = () => ReactDOM.render(<App />, document.getElementById("root"))
+renderApp()
+</script>

@@ -1,0 +1,36 @@
+<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+<script type="text/babel">
+
+    const App = () => {
+        console.log('App render')
+        const [name, setName] = React.useState('')
+        const error = (name == name.toLowerCase()) ? false : true
+        const validateUserName = (event) => {
+            console.log('validateUserName')
+            const name = event.target.value
+            setName(name)
+        }
+        const submitHandler = (event) => {
+            event.preventDefault()
+            console.log(event.target.elements.userName.value)
+            alert(`Hi ${event.target.userName.value} `)
+        }
+        return (
+            <form onSubmit={submitHandler}>
+                <p><label htmlFor="userName">Name</label></p>
+                <p><input id="userName" onChange={validateUserName}/></p>
+                {error ? <p style={{color: "red"}}>The name must be in lowercase</p> : null}
+                <p><button disabled={Boolean(error)}type="Submit">Submit</button></p>
+            </form>
+        )
+    }
+    const renderApp = () => ReactDOM.render(<App />, document.getElementById("root"))
+    renderApp()
+</script>
+
+<body>
+    <div id="root"></div>
+</body>

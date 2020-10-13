@@ -1,0 +1,28 @@
+<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+<body>
+    <div id="root">
+
+    </div>
+</body>
+
+<script type="text/babel">
+
+const tick = () => {
+    renderApp()
+}
+
+    const App = () => {
+        
+        const time = new Date().toLocaleTimeString()
+        return (
+            <h1>{`Hello World! Now its`} {time}</h1>
+        )
+    }
+
+    const renderApp = () => ReactDOM.render(<App />, document.getElementById("root"))
+
+    setInterval(tick, 1000)
+</script>

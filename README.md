@@ -1,0 +1,192 @@
+<script type="text/babel">
+// React
+
+// Server start : npx browser-sync start --server --files "./*.html" --no-open --no-notify --directory
+
+// — Writing react similar to javascript
+
+const element = React.createElement(‘div’, { children: "Hello World"})
+ReactDOM.render(element, rootElement)
+
+
+// Writing jsx code -> writing react similar to html tags and javascript
+
+const element = <div className="container">Hello World</div>
+
+// This jsx code is compiled using Babel - a javascript compiler  https://babeljs.io/
+// Learn how it compiles jsx
+
+// React.Fragment is used to add more tags side by side, without using div
+ReactDOM.render(element, rootElement) //accepts only one element
+
+<React.Fragment></React.Fragment>
+// is written as
+
+    const element = <> 
+        <span/> <span/> 
+    </>
+
+
+// Writing functions with props as arguments
+
+const Message = props => <h1 {...props}/>
+    
+const element = (
+    <>
+        <Message className='container'>BTS</Message>
+        <Message>Army</Message>
+    </>)
+ReactDOM.render(element, rootElement)
+
+
+// PropTypes
+// PropTypes are defined as functions in prop-types.js.
+// There is a production.min version to remove the warnings during compilation
+// babel-plugin-transform-react-remove-prop-types removes the propTypes code from source code
+// Remove React propTypes from the production build, as they are only used in development.
+
+// Interpolation
+// One can write html, javascript, jsx, css in one file
+// Going back and forth javascript and jsx
+
+// Re-render
+// React will do a diff between the dom elements before and after the render.
+// Then it will surgically render only the changed element, without rendering the whole dom element.
+// This makes it very efficient than usual javascript rendering.
+
+// Styling
+// style={{backGroundColor: "blue"}}
+// Remember to separate the components incase of overriding
+
+// EventHandlers
+
+
+function App() {
+    function handleClick() {
+    setState({eventCount: state.eventCount + 1})
+    }
+
+    function handleChange(event) {
+    setState({username: event.target.value})
+    }
+
+    return (
+    <div>
+        <p>There have been {state.eventCount} events.</p>
+        <p>
+            <button onClick={handleClick}>Click Me</button>
+        </p>
+        <p>You typed: {state.username}</p>
+        <p>
+            <input onChange={handleChange} />
+        </p>
+    </div>
+    )
+}
+
+function setState(newState) {
+    Object.assign(state, newState)
+    renderApp()
+}
+
+function renderApp() {
+    ReactDOM.render(<App />, document.getElementById('root'))
+}
+
+renderApp()
+
+
+
+// Synthetic Event Vs Native Event
+// React does performance optimization to the native events thats is what Synthetic Event is.
+
+e.preventDefault();
+
+// Setting state
+// React keeps track of the states. React.useState can be called as many times 
+const [name, setName] = React.useState('')
+const [name2, setName2] = React.useState('')
+
+const handleChange = event => setName(event.target.value)
+const handleChange2 = event => setName2(event.target.value)
+
+
+// Local storage
+// LocalStorage retains the value even after refresh
+const [name, setName] = React.useState(
+    window.localStorage.getItem('name') || '',
+)
+React.useEffect(() => {
+    window.localStorage.setItem('name', name)
+})
+const handleChange = event => setName(event.target.value)
+
+// Lazy initialization
+// The above code useState hook access localStorage every time as one types (onchange).
+// This should be avoided as follows by converting into a function.
+// The function call will happen only if its absolutely needed.
+// This is called as lazy initialization
+
+const [name, setName] = React.useState(() =>
+    window.localStorage.getItem('name') || '',
+)
+
+// Effect dependency
+// The useEffect hook is also called everytime rendering happens.
+// The useEffect should be called only when name is changed
+// To avoid that, the dependent variable to call the useEffect is passed as follows.
+// The dependency array will keep state of the world is sync-ed with the state of the application.
+// eslint-plugin-react-hooks is provided to enforce this and it automatically updates the state.
+React.useEffect(() => {
+    window.localStorage.setItem('name', name)
+}, [name])
+
+// custom hooks - by convention starts with 'use'.
+// The localStorage dependent codes are put in a method.
+// 
+
+const useLocalStorage = (key, defaultValues = {}) => {
+    const [state, setState] = React.useState(() =>
+        window.localStorage.getItem(key) || defaultValues,
+    )
+    React.useEffect((key, state) => {
+        window.localStorage.setItem(key, state)
+    }, [key, state])
+
+    return [state, setState]
+}
+const handleChange = event => setName(event.target.value)
+
+// useEffect is used to obtain any values after the rendering has happened
+
+
+// hook workflow
+// https://github.com/donavon/hook-flow
+</script>
+
+// Forms
+<form onSubmit={submitHandler}>
+</form>
+
+<script>
+const submitHandler = (event) => {
+    event.preventDefault()
+    alert(`Hi ${event.target.userName.value} `)
+}
+
+// Error Boundary
+// Error boundaries are React components that catch JavaScript errors
+// anywhere in their child component tree, log those errors, and 
+// display a fallback UI instead of the component tree that crashed.
+
+// Error boundaries catch errors during rendering, in lifecycle methods, 
+// and in constructors of the whole tree below them.
+// Handles the errors in react call stack, but not the async, event handlers and server side rendering
+import {ErrorBoundary} from 'react-error-boundary'
+const ErrorBoundary = ReactErrorBoundary.ErrorBoundary
+
+// Using Kep prop to render lists/ array
+// React will do a diff between the dom elements before and after the render.
+// If key prop is not used, the React cannot keep track of the items properly if the array was modified
+
+</script>

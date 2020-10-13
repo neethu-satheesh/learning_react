@@ -1,0 +1,44 @@
+<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+<body>
+    <div id="root">      
+    </div>
+</body>
+
+<script type="text/babel">
+
+const setStates = (key, defaultValue = '') => {
+    const [state, setState] = React.useState(() => {
+        return window.localStorage.getItem(key) || defaultValue
+    })
+    React.useEffect(() =>{
+        window.localStorage.setItem(key, state)
+    }, [key, state])
+    return [state, setState]
+}
+
+const App = () => {
+    const [name, setName] = setStates('name')
+    const setUserName = (event) => {
+        setName(event.target.value)
+    }
+    return(
+        <>
+            <label htmlFor="name">Name</label>
+            <input id="name" onChange={setUserName} value={name}/>
+            <h1>You typed: {name} </h1>
+        </>
+    )
+}
+
+
+const renderApp = () => {
+    ReactDOM.render(<App />, document.getElementById("root"))
+}
+
+ renderApp()
+</script>
+
+

@@ -1,0 +1,17 @@
+<body>
+  <p>Hello</p>
+  <div id="root">
+  </div>
+</body>
+<script type="text/javascript">
+  var rootElement = document.getElementById('root')
+  var element = document.createElement('div')
+  element.className = 'container'
+  element.textContent = 'Hello World!'
+  rootElement.appendChild(element)
+</script>
+<style>
+  p {
+    color: red;
+  }
+</style>

@@ -1,0 +1,53 @@
+<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+<script type="text/babel">
+    const App = () => {
+        const fruits = [
+            {id: "a", value: "apple"},
+            {id: "o", value: "orange"},
+            {id: "g", value: "grape"},
+            {id: "l", value: "lemon"}
+        ]
+        let [items, setItems] = React.useState(fruits)
+        const [name, setName] = React.useState('')
+
+        const filterHandler = () => {
+            if(name == '') {
+                setItems(fruits)
+            }
+            else {
+                items = items.filter((item) => item.value == name)
+                setItems(items)
+            }
+        }
+
+        const setNameHandler = (event) => {
+            if(event.target.value == '') {
+                setItems(fruits)
+            }
+            setName(event.target.value)
+        }
+
+        return(
+            <div>
+                <ul>
+                    {items.map((item) => {
+                        return <li key={item.id}>{item.value}</li>
+                    })}
+                </ul>
+                <div>
+                    <input id="name" onChange={setNameHandler}/>
+                    <button onClick={filterHandler}>Filter</button>
+                </div>
+            </div>
+        )
+    }
+    const renderApp = () => ReactDOM.render(<App />, document.getElementById("root"))
+    renderApp()
+</script>
+
+<body>
+    <div id="root"></div>
+</body>

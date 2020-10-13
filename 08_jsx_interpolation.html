@@ -1,0 +1,36 @@
+<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script type="text/babel">
+// The text Hello World has 11 characters
+// The text '' has No characters 
+
+const CharacterCount = ({text}) => {
+    console.log(text)
+    const textLength = text.length? <strong>{text.length}</strong> : 'No'
+    return (
+        <div>
+            {`The text '${text}' has `} 
+            {textLength} 
+            {` characters`}
+        </div>
+    )
+}
+
+const App = () => {
+    return (
+        <>
+            <CharacterCount text="Hello World" />
+            <CharacterCount text= "" />
+        </>
+    )
+}
+
+const renderApp = () => ReactDOM.render(<App />, document.getElementById("root"))
+renderApp()
+</script>
