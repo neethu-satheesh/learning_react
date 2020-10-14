@@ -1,0 +1,68 @@
+<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+<script type="text/babel">
+
+    async function getUserInfo(userName){
+       const reponse = await fetch(`https://api.github.com/users/${userName}`)
+       const responseObj = await reponse.json()
+       return responseObj
+    }
+    
+    const PrintUser = ({user}) => {
+        if(user && user.id) {
+            return (
+                <div>
+                    <p>ID: {user.id}</p>
+                    <p>Type: {user.type}</p>
+                    <p>Avatar URL: {user.avatar_url}</p>
+                    <p>Name: {user.name}</p>
+                </div>
+            )
+        } else {
+            return <p>...</p>
+        }
+    }
+
+    const App = () => {
+        const [user, setUser] = React.useState('')
+
+        const checkValidity = (response) => {
+            console.log(response.message)
+            if(response.message == `Not Found`) {
+                setUser(null)
+                throw new Error('Incorrect user name')
+            }
+            else return response
+        }
+
+        const submitHandler = (event) => {
+            event.preventDefault()
+            
+            const userName = event.target.userName.value
+            getUserInfo(userName)
+            .then(checkValidity)
+            .then(setUser)
+            .catch(console.log)
+        }
+
+        return (
+            <div>
+                <form onSubmit={submitHandler}>
+                    <p><label htmlFor="userName">GIT Username</label></p>
+                    <p><input id="userName" /></p>
+                    <p><button type="submit">Submit</button></p>
+                </form>
+                <hr />
+                <PrintUser user={user}/>
+            </div>
+        )
+    }
+    const renderApp = () => ReactDOM.render(<App />, document.getElementById("root"))
+    renderApp()
+</script>
+
+<body>
+    <div id="root"></div>
+</body>
